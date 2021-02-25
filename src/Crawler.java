@@ -4,12 +4,26 @@ import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 public class Crawler {
 
 	public static void main(String[] args) {
-		String url = "https://en.wikipedia.org/";
-		crawl(1,url,new ArrayList<String>());
+		String url = "https://templatemo.com/";
+//		crawl(1,url,new ArrayList<String>());
+		
+		try {
+			Document doc = Jsoup.connect(url).get();
+			System.out.println("Connected To:" + url);
+			ArrayList<Element> image = doc.select("img[src]");
+			System.out.println(image.size());
+			for (int counter = 0; counter < image.size(); counter++) { 		      
+		          System.out.println(image.get(counter).absUrl("src")); 		
+		      } 
+			
+		} catch (IOException e) {
+			return;
+		}
 
 	}
 	private static void crawl(int level,String url,ArrayList<String> visited) {
